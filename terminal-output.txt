@@ -1,0 +1,37 @@
+Last password change					: Nov 16, 2026
+Password expires					: Feb 14, 2027
+Password inactive					: never
+Account expires						: never
+Minimum number of days between password change		: 0
+Maximum number of days between password change		: 90
+Number of days of warning before password expires	: 7
+uid=1234(user1) gid=1002(students) groups=1002(students)
+/usr/bin/passwd
+/usr/bin/su
+/usr/bin/newgrp
+/usr/bin/gpasswd
+/usr/bin/chfn
+/usr/bin/chsh
+/usr/bin/mount
+/usr/bin/sudo
+/usr/bin/umount
+/usr/lib/polkit-1/polkit-agent-helper-1
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/usr/lib/openssh/ssh-keysign
+    PID  RUID  EUID USER     COMMAND
+   2167  1000     0 root     sudo
+   2217  1234     0 root     passwd
+cat: /etc/shadow: Permission denied
+30
+-rw-r--r-- 1 root root 0 Nov 16 16:40 /tmp/testfile
+chown: changing ownership of '/tmp/testfile': Operation not permitted
+-rw-r--r-- 1 user1 students 0 Nov 16 16:40 /tmp/testfile
+/etc/sudoers: parsed OK
+/etc/sudoers.d/90-cloud-init-users: parsed OK
+/etc/sudoers.d/README: parsed OK
+Matching Defaults entries for user1 on mephi-linux-security:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin, use_pty
+
+User user1 may run the following commands on mephi-linux-security:
+    (root) NOPASSWD: /usr/bin/date -s *
+/home/user1/privchown cap_chown=ep

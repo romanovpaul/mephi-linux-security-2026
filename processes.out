@@ -1,0 +1,3 @@
+    PID  RUID  EUID USER     COMMAND
+   2167  1000     0 root     sudo
+   2217  1234     0 root     passwd

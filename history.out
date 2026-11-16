@@ -1,0 +1,33 @@
+    1  groupadd students
+    2  useradd -m -u 1234 -g students -s /bin/bash user1
+    3  echo "user1:$PW" | chpasswd
+    4  chage -M 90 user1
+    5  chage -l user1
+    6  id user1
+    7  find / -xdev -type f -perm -4000 2>/dev/null > ~/setuid-files.out
+    8  cat ~/setuid-files.out
+    9  setsid su user1 -c 'sleep 15 | passwd' < /dev/null > /dev/null 2>&1 &
+   10  sleep 2
+   11  ps -eo pid,ruid,euid,user,comm | awk 'NR==1 || ($3==0 && $2>=1000)' > ~/processes.out
+   12  cat ~/processes.out
+   13  cp /usr/bin/cat /home/user1/privcat
+   14  chown root:root /home/user1/privcat
+   15  chmod u+s /home/user1/privcat
+   16  su user1 -c 'cat /etc/shadow'
+   17  su user1 -c '/home/user1/privcat /etc/shadow | wc -l'
+   18  cp /usr/bin/chown /home/user1/privchown
+   19  setcap cap_chown+ep /home/user1/privchown
+   20  touch /tmp/testfile
+   21  ls -l /tmp/testfile
+   22  su user1 -c 'chown user1:students /tmp/testfile'
+   23  su user1 -c '/home/user1/privchown user1:students /tmp/testfile'
+   24  ls -l /tmp/testfile
+   25  echo 'user1 ALL=(root) NOPASSWD: /usr/bin/date -s *' >> /etc/sudoers
+   26  visudo -c
+   27  sudo -l -U user1
+   28  stat /home/user1 > ~/stat.out
+   29  stat /home/user1/privcat >> ~/stat.out
+   30  stat /home/user1/privchown >> ~/stat.out
+   31  getcap /home/user1/privchown > ~/getcap.out
+   32  cat ~/getcap.out
+   33  history > ~/history.out
